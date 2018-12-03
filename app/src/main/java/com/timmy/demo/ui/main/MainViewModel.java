@@ -18,12 +18,6 @@ public class MainViewModel extends ViewModel {
 
         isLoading.set(true);
 
-        mData.retrieveData(new DataModel.onDataReadyCallback() {
-            @Override
-            public void onDataReady(String data) {
-                mData.set(data);
-                isLoading.set(false);
-            }
-        });
+        mDataPool.retrieveData();
     }
 }
