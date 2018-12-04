@@ -1,9 +1,12 @@
 package com.timmy.demo.model;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.timmy.demo.model.server.OpenDataApiClient;
 import com.timmy.demo.model.server.result.exhibit.Exhibit;
+import com.timmy.demo.model.server.result.exhibit.ExhibitResult;
+import com.timmy.demo.model.server.result.plant.Plant;
 
 import io.reactivex.Single;
 import io.reactivex.SingleSource;
@@ -16,70 +19,62 @@ import retrofit2.Response;
 
 public class DataPool {
 
-
     private CompositeDisposable mDisposables = new CompositeDisposable();
 
+    private ExhibitResult mResult;
     public DataPool() {
 
     }
 
-    public void retrieveData() {
-        mDisposables.add(Single.just(getExhibitFromCache())
-                .subscribeOn(Schedulers.io())
-                .flatMap(new Function<Exhibit, SingleSource<Response<Exhibit>>>() {
-                    @Override
-                    public SingleSource<Response<Exhibit>> apply(Exhibit exhibit) throws Exception {
-                        //String petId = response.body().getPetId();
-                        Log.e("Timmy", "exhibit == " + (exhibit==null));
-                        return OpenDataApiClient.getExhibitInfosRx();
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<Response<Exhibit>>() {
-                    @Override
-                    public void onSuccess(Response<Exhibit> response) {
-                        Log.e("Timmy", response.body().toString());
-                    }
+    public void retrieveData(final Context context) {
+        try {
+            mDisposables.add(Single.just(getDataFromCache(context))
+                    .subscribeOn(Schedulers.io())
+                    .flatMap(new Function<ExhibitResult, SingleSource<Response<Exhibit>>>() {
+                        @Override
+                        public SingleSource<Response<Exhibit>> apply(ExhibitResult exhibit) throws Exception {
+                            Log.e("Timmy", "??? " + (exhibit == null));
+                            mResult = exhibit;
+                            Log.e("Timmy", exhibit.toString());
+                            return OpenDataApiClient.getExhibitInfosRx();
+                        }
+                    })
+                    .flatMap(new Function<Response<Exhibit>, SingleSource<Response<Plant>>>() {
+                        @Override
+                        public SingleSource<Response<Plant>> apply(Response<Exhibit> exhibitResponse) throws Exception {
+                            ExhibitResult result = exhibitResponse.body().getResult();
+                            if (!mResult.equals(result)) {
+                                ExhibitResult.saveToFile(context, result);
+                                mResult = result;
+                            }
+                            return OpenDataApiClient.getPlantInfosRx();
+                        }
+                    })
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new DisposableSingleObserver<Response<Plant>>() {
+                        @Override
+                        public void onSuccess(Response<Plant> response) {
+                            Log.e("Timmy", response.body().toString());
+                        }
 
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-                }));
-
-//        mDisposables.add(OpenDataApiClient.getExhibitInfosRx()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeWith(new DisposableSingleObserver<Response<Exhibit>>() {
-//                    @Override
-//                    public void onSuccess(Response<Exhibit> response) {
-//                        int code = response.code();
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//
-//                    }
-//                }));
-//
-//        mDisposables.add(OpenDataApiClient.getPlantInfosRx()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeWith(new DisposableSingleObserver<Response<Plant>>() {
-//                    @Override
-//                    public void onSuccess(Response<Plant> response) {
-//                        int code = response.code();
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//
-//                    }
-//                }));
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e("Timmy", "get error?", e);
+                        }
+                    }));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    private Exhibit getExhibitFromCache() {
-        return new Exhibit();
+    private ExhibitResult getDataFromCache(final Context context) {
+        ExhibitResult result = ExhibitResult.loadFromFile(context);
+        Log.e("Timmy", "rsu = " + result);
+        if (result == null) {
+            return new ExhibitResult();
+        } else {
+            return result;
+        }
     }
 
     public void cancelRetrieveData() {

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Demo</string>
+    <string name="splash_msg">木柵動物園\n場館及植物簡介</string>
+    <string name="splash_loading">資料讀取中</string>
+</resources>

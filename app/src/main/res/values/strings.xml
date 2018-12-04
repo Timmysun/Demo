@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">TaipeiZoo</string>
+    <string name="app_name">Demo</string>
+    <string name="splash_msg">Taipei Zoo\nExhibits and Plants</string>
+    <string name="splash_loading">Loading</string>
 </resources>

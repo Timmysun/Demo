@@ -1,5 +1,6 @@
 package com.timmy.demo.model.server.result.plant;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -8,11 +9,15 @@ import android.support.v4.util.Pair;
 import com.google.gson.annotations.SerializedName;
 import com.timmy.demo.utils.Constants;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class PlantInfo implements Parcelable {
+public class PlantInfo implements Parcelable, Serializable {
 
     @SerializedName("_id")
     private int mId;
@@ -307,4 +312,16 @@ public class PlantInfo implements Parcelable {
         dest.writeString(mGeo);
     }
 
+    public void saveToFile(@NonNull Context context) {
+        File cache = new File(context.getCacheDir(), "exhibit.cache");
+        try {
+            FileOutputStream outputStream = new FileOutputStream(cache);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+            objectOutputStream.writeObject(this);
+            objectOutputStream.close();
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
