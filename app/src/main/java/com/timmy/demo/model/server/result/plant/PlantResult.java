@@ -5,10 +5,13 @@ import android.support.annotation.NonNull;
 import com.google.gson.annotations.SerializedName;
 import com.timmy.demo.model.server.result.ResultBase;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 
-public class PlantResult extends ResultBase {
+public class PlantResult extends ResultBase implements Serializable {
+
+    private static final long serialVersionUID = 876323262645176355L;
 
     @SerializedName("results")
     private List<PlantInfo> mPlantInfos;

@@ -19,6 +19,8 @@ import java.util.Locale;
 
 public class PlantInfo implements Parcelable, Serializable {
 
+    private static final long serialVersionUID = 876323262645176350L;
+
     @SerializedName("_id")
     private int mId;
     @SerializedName("F_CID")

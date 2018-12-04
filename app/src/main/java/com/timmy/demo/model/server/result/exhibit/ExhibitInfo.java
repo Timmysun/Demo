@@ -11,6 +11,8 @@ import java.util.Locale;
 
 public class ExhibitInfo implements Parcelable, Serializable {
 
+    private static final long serialVersionUID = 876323262645176353L;
+
     @SerializedName("_id")
     private int mId;
     @SerializedName("E_no")

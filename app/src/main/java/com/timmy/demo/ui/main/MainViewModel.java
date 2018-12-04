@@ -1,13 +1,15 @@
 package com.timmy.demo.ui.main;
 
-import android.arch.lifecycle.ViewModel;
-import android.content.Context;
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
+import android.databinding.Observable;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.support.annotation.NonNull;
 
 import com.timmy.demo.model.DataPool;
 
-public class MainViewModel extends ViewModel {
+public class MainViewModel extends AndroidViewModel {
 
     public final ObservableField<String> mData = new ObservableField<>();
 
@@ -15,10 +17,19 @@ public class MainViewModel extends ViewModel {
 
     private DataPool mDataPool = new DataPool();
 
-    public void refresh(final Context context) {
+    public MainViewModel(@NonNull Application application) {
+        super(application);
+    }
+
+    public void addOnPropertyChangedCallback(Observable.OnPropertyChangedCallback callback) {
+        mDataPool.addOnPropertyChangedCallback(callback);
+    }
+
+    public void retrieveData() {
+
 
         isLoading.set(true);
 
-        mDataPool.retrieveData(context);
+        mDataPool.retrieveData(getApplication().getApplicationContext());
     }
 }
