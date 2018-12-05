@@ -2,5 +2,10 @@
 <resources>
     <string name="app_name">Demo</string>
     <string name="splash_msg">木柵動物園\n場館及植物簡介</string>
-    <string name="splash_loading">資料讀取中</string>
+    <string name="splash_loading_read_cache">快取資料讀取中…</string>
+    <string name="splash_loading_cache_fail">快取資料讀取失敗…</string>
+    <string name="splash_loading_network_success">網路資料讀取成功</string>
+    <string name="splash_loading_network_data">網路資掉讀取中…</string>
+    <string name="splash_loading_cache_success">快取資料讀取成功</string>
+    <string name="splash_loading_network_fail">網路資料讀取失敗，請確認網路連線…</string>
 </resources>

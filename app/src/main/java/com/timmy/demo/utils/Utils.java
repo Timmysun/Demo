@@ -13,9 +13,21 @@ import java.io.Serializable;
 
 public class Utils {
 
+    public enum RetrieveDataStatus {
+        READ_CACHE,
+        READ_CACHE_FAIL,
+        READ_CACHE_SUCCESS,
+        LOAD_DATA,
+        LOAD_DATA_FAIL,
+        LOAD_DATA_SUCCESS
+    }
+
     static public void saveToFile(@NonNull Context context,
-                                  @NonNull Serializable result,
+                                  @Nullable Serializable result,
                                   @NonNull String cacheFile) {
+        if (result == null) {
+            return;
+        }
         File cache = new File(context.getCacheDir(), cacheFile);
         try {
             FileOutputStream outputStream = new FileOutputStream(cache);

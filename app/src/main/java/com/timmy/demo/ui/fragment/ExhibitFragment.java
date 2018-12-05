@@ -1,7 +1,5 @@
-package com.timmy.demo.ui.main;
+package com.timmy.demo.ui.fragment;
 
-import android.arch.lifecycle.ViewModelProviders;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,7 +13,6 @@ import com.timmy.demo.databinding.MainFragmentBinding;
 
 public class ExhibitFragment extends Fragment {
 
-    private MainViewModel mViewModel;
 
     private MainFragmentBinding mBinding;
 
@@ -33,13 +30,10 @@ public class ExhibitFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mBinding = DataBindingUtil.setContentView(getActivity(), R.layout.main_fragment);
-        mBinding.setViewModel(mViewModel);
     }
 }

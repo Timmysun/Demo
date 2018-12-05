@@ -1,4 +1,4 @@
-package com.timmy.demo.ui.main;
+package com.timmy.demo.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,8 +12,6 @@ import com.timmy.demo.R;
 import com.timmy.demo.databinding.MainFragmentBinding;
 
 public class PlantFragment extends Fragment {
-
-    private MainViewModel mViewModel;
 
     private MainFragmentBinding mBinding;
 
