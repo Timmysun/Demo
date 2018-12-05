@@ -27,7 +27,7 @@ public class SplashViewModel extends AndroidViewModel {
     }
 
     public void retrieveData() {
-        DataPool.getInstance().retrieveData1(getApplication().getApplicationContext());
+        DataPool.getInstance().retrieveData(getApplication().getApplicationContext());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
+    <!--<data>-->
 
-        <variable
-            name="viewModel"
-            type="com.timmy.demo.ui.viewmodel.SplashViewModel" />
+        <!--<variable-->
+            <!--name="viewModel"-->
+            <!--type="com.timmy.demo.ui.viewmodel.SplashViewModel" />-->
 
-    </data>
+    <!--</data>-->
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/main"
@@ -21,6 +21,7 @@
             android:id="@+id/message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
             android:text="test"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -2,9 +2,9 @@
     <string name="app_name">Demo</string>
     <string name="splash_msg">Taipei Zoo\nExhibits and Plants</string>
     <string name="splash_loading_read_cache">Loading cache data…</string>
-    <string name="splash_loading_cache_fail">Loading cache fail…</string>
+    <string name="splash_loading_cache_fail">Loading cache fail</string>
     <string name="splash_loading_network_data">Loading data from network…</string>
     <string name="splash_loading_network_success">Loading data success</string>
-    <string name="splash_loading_cache_success">Loading cache success…</string>
-    <string name="splash_loading_network_fail">Loading data fail, please check network status</string>
+    <string name="splash_loading_cache_success">Loading cache success</string>
+    <string name="splash_loading_network_fail">Loading data fail, please check network status…</string>
 </resources>
