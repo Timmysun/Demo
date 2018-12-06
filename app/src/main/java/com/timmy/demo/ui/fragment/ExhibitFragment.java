@@ -9,12 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.timmy.demo.R;
-import com.timmy.demo.databinding.MainFragmentBinding;
 
 public class ExhibitFragment extends Fragment {
-
-
-    private MainFragmentBinding mBinding;
 
     public static ExhibitFragment newInstance() {
         return new ExhibitFragment();
@@ -24,7 +20,7 @@ public class ExhibitFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.main_fragment, container, false);
+        return inflater.inflate(R.layout.exhibit_fragment, container, false);
     }
 
     @Override
