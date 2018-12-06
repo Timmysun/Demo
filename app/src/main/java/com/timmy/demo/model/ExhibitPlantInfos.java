@@ -6,19 +6,9 @@ import com.timmy.demo.model.server.result.exhibit.ExhibitResult;
 import com.timmy.demo.model.server.result.plant.PlantResult;
 
 public class ExhibitPlantInfos {
-    private static ExhibitPlantInfos sEmptyInfos = new ExhibitPlantInfos();
+
     private ExhibitResult mExhibitResult;
     private PlantResult mPlantResult;
-
-    public static ExhibitPlantInfos getEmptyInfos() {
-        return sEmptyInfos;
-    }
-
-    public static boolean isEmptyInfos(ExhibitPlantInfos infos) {
-        return sEmptyInfos.equals(infos);
-    }
-
-    private ExhibitPlantInfos() {}
 
     public ExhibitPlantInfos(ExhibitResult exhibitResult,
                              PlantResult plantResult) {
@@ -31,9 +21,7 @@ public class ExhibitPlantInfos {
 
     }
 
-
     public boolean updateExhibitResult(@Nullable ExhibitResult exhibitResult) {
-
         if (mExhibitResult == null || !mExhibitResult.equals(exhibitResult)) {
             mExhibitResult = exhibitResult;
             buildData();

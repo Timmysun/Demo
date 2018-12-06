@@ -81,6 +81,21 @@ public class ExhibitInfo implements Parcelable, Serializable {
                 mName, mUrl, mPicUrl, mCategory, mInfo, mMemo, mNumber, getId());
     }
 
+    public boolean equals(ExhibitInfo exhibit) {
+        if (exhibit == null) {
+            return false;
+        }
+        return getId() == exhibit.getId() &&
+                getNumber().equals(exhibit.getNumber()) &&
+                getName().equals(exhibit.getName()) &&
+                getUrl().equals(exhibit.getUrl()) &&
+                getPicUrl().equals(exhibit.getPicUrl()) &&
+                getCategory().equals(exhibit.getCategory()) &&
+                getInfo().equals(exhibit.getInfo()) &&
+                getMemo().equals(exhibit.getMemo()) &&
+                getGeo().equals(exhibit.getGeo());
+    }
+
     @Override
     public int describeContents() {
         return 0;

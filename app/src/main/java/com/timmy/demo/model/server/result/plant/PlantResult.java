@@ -32,4 +32,16 @@ public class PlantResult extends ResultBase implements Serializable {
         return sb.toString();
     }
 
+    public boolean equals(PlantResult result) {
+        if (result == null || getInfos() == null || result.getInfos() == null ||
+                getInfos().size() != result.getInfos().size()) {
+            return false;
+        }
+        for (int index = 0; index < getInfos().size(); index++) {
+            if (!getInfos().get(index).equals(result.getInfos().get(index))) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

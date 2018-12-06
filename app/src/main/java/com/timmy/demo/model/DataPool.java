@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.util.Pair;
 import android.util.Log;
 
+import com.timmy.demo.BuildConfig;
 import com.timmy.demo.model.server.OpenDataApiClient;
 import com.timmy.demo.model.server.result.exhibit.Exhibit;
 import com.timmy.demo.model.server.result.exhibit.ExhibitResult;
@@ -26,6 +27,7 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
 public class DataPool{
+    private static final String TAG = "DataPool";
 
     private static DataPool sInstance;
 
@@ -44,6 +46,7 @@ public class DataPool{
 
     private Observable<Pair<ExhibitResult, PlantResult>> retrieveDataFromOpenDataApi() {
         EventBus.getDefault().post(Utils.RetrieveDataStatus.LOAD_DATA);
+        Log.d(TAG, "load data from network");
         return OpenDataApiClient.getExhibitInfosRx().zipWith(OpenDataApiClient.getPlantInfosRx(),
                 new BiFunction<Response<Exhibit>, Response<Plant>, Pair<ExhibitResult, PlantResult>>() {
                     @Override
@@ -58,17 +61,19 @@ public class DataPool{
     public void retrieveData(final Context context) {
         try {
             mDisposables.add(
-                    Observable.fromCallable(new Callable<ExhibitPlantInfos>() {
+                    Observable.fromCallable(new Callable<Pair<ExhibitResult, PlantResult>>() {
                         @Override
-                        public ExhibitPlantInfos call() throws Exception {
+                        public Pair<ExhibitResult, PlantResult> call() throws Exception {
                             return getDataFromCache(context);
                         }
                     }).subscribeOn(Schedulers.io())
-                    .flatMap(new Function<ExhibitPlantInfos, Observable<Pair<ExhibitResult, PlantResult>>>() {
+                    .flatMap(new Function<Pair<ExhibitResult, PlantResult>, Observable<Pair<ExhibitResult, PlantResult>>>() {
                         @Override
-                        public Observable<Pair<ExhibitResult, PlantResult>> apply(ExhibitPlantInfos exhibitPlantInfos) {
-                            mExhibitPlantInfos = exhibitPlantInfos;
-                            if (ExhibitPlantInfos.isEmptyInfos(mExhibitPlantInfos) || true) {
+                        public Observable<Pair<ExhibitResult, PlantResult>> apply(Pair<ExhibitResult, PlantResult> exhibitPlantPair) {
+                            if (exhibitPlantPair.first != null) {
+                                mExhibitPlantInfos = new ExhibitPlantInfos(exhibitPlantPair.first, exhibitPlantPair.second);
+                            }
+                            if (mExhibitPlantInfos == null || BuildConfig.LOAD_DATA_EVERY_TIME) {
                                 return retrieveDataFromOpenDataApi();
                             }
                             return null;
@@ -76,69 +81,56 @@ public class DataPool{
                     })
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(new DisposableObserver<Pair<ExhibitResult, PlantResult>>() {
-//                        @Override
-//                        public void onSuccess(Pair<ExhibitResult, PlantResult> result) {
-//                            if (mExhibitPlantInfos != null) {
-//                                if (mExhibitPlantInfos.updateExhibitResult(result.first)) {
-//                                    Utils.saveToFile(context, result.first, Constants.EXHIBIT_CACHE_FILE);
-//                                }
-//                                if (mExhibitPlantInfos.updatePlantResult(result.second)) {
-//                                    Utils.saveToFile(context, result.second, Constants.PLANT_CACHE_FILE);
-//                                }
-//                            }
-//                            EventBus.getDefault().post(Utils.RetrieveDataStatus.LOAD_DATA_SUCCESS);
-//                        }
-
                         @Override
                         public void onNext(Pair<ExhibitResult, PlantResult> result) {
-                            Log.e("Timmy", "onnext ???");
+                            Log.d(TAG, "load data from network complete");
                             if (mExhibitPlantInfos != null) {
                                 if (mExhibitPlantInfos.updateExhibitResult(result.first)) {
+                                    Log.d(TAG, "exhibit data changes, save to cache.");
                                     Utils.saveToFile(context, result.first, Constants.EXHIBIT_CACHE_FILE);
                                 }
                                 if (mExhibitPlantInfos.updatePlantResult(result.second)) {
+                                    Log.d(TAG, "plants data changes, save to cache.");
                                     Utils.saveToFile(context, result.second, Constants.PLANT_CACHE_FILE);
                                 }
+                            } else {
+                                Log.d(TAG, "save network data to cache.");
+                                mExhibitPlantInfos = new ExhibitPlantInfos(result.first, result.second);
+                                Utils.saveToFile(context, result.first, Constants.EXHIBIT_CACHE_FILE);
+                                Utils.saveToFile(context, result.second, Constants.PLANT_CACHE_FILE);
                             }
                             EventBus.getDefault().post(Utils.RetrieveDataStatus.LOAD_DATA_SUCCESS);
-
                         }
 
                         @Override
                         public void onError(Throwable e) {
-                            if (ExhibitPlantInfos.isEmptyInfos(mExhibitPlantInfos)) {
-                                EventBus.getDefault().post(Utils.RetrieveDataStatus.LOAD_DATA_FAIL);
-                                e.printStackTrace();
-                            }
+                            EventBus.getDefault().post(Utils.RetrieveDataStatus.LOAD_DATA_FAIL);
+                            e.printStackTrace();
                         }
 
                         @Override
-                        public void onComplete() {
-                            Log.e("Timmy", "onComplete??");
-                        }
+                        public void onComplete() { }
                     }));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private ExhibitPlantInfos getDataFromCache(final Context context) {
-        Log.e("Timmy", "in cache");
+    private Pair<ExhibitResult, PlantResult> getDataFromCache(final Context context) {
+        Log.d(TAG, "load data from cache");
         EventBus.getDefault().post(Utils.RetrieveDataStatus.READ_CACHE);
+
         ExhibitResult exhibitResult = (ExhibitResult) Utils.loadFromFile(context, Constants.EXHIBIT_CACHE_FILE);
         PlantResult plantResult = (PlantResult) Utils.loadFromFile(context, Constants.PLANT_CACHE_FILE);
-        try {
-            Thread.sleep(5000);
-        }catch (Exception e) {
 
-        }
         if (exhibitResult == null) {
+            Log.d(TAG, "load data from cache fail");
             EventBus.getDefault().post(Utils.RetrieveDataStatus.READ_CACHE_FAIL);
-            return ExhibitPlantInfos.getEmptyInfos();
         } else {
+            Log.d(TAG, "load data from cache success");
             EventBus.getDefault().post(Utils.RetrieveDataStatus.READ_CACHE_SUCCESS);
-            return new ExhibitPlantInfos(exhibitResult, plantResult);
         }
+        return Pair.create(exhibitResult, plantResult);
     }
 
     public void cancelRetrieveData() {

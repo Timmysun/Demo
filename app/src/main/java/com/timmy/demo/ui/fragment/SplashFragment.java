@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +25,7 @@ public class SplashFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         SplashViewModel viewModel = ViewModelProviders.of(this).get(SplashViewModel.class);
-        Log.e("Timmy", "test1");
         viewModel.retrieveData();
-        Log.e("Timmy", "test2");
         SplashFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.splash_fragment, container, false);
         binding.setLoadingMessage(viewModel.getLoadingMessage());
         return binding.getRoot();

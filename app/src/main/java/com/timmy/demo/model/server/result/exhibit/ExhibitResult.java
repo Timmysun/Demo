@@ -26,20 +26,20 @@ public class ExhibitResult extends ResultBase implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format(Locale.getDefault(), "limit=%d offset=%d count=%d sort=%s\n",
                 getLimit(), getOffset(), getCount(), getSort()));
-        if (mExhibitInfos != null) {
-            for (ExhibitInfo exhibitInfo : mExhibitInfos) {
-                sb.append("[" + exhibitInfo.toString() + "]\n");
-            }
-        }
         return sb.toString();
     }
 
     public boolean equals(ExhibitResult result) {
-        if (result == null) {
+        if (result == null || getInfos() == null || result.getInfos() == null ||
+                getInfos().size() != result.getInfos().size()) {
             return false;
         }
-
-        return getInfos() != null && result.getInfos() != null && getInfos().size() == result.getInfos().size();
+        for (int index = 0; index < getInfos().size(); index++) {
+            if (!getInfos().get(index).equals(result.getInfos().get(index))) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

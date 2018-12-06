@@ -104,7 +104,7 @@ public class PlantInfo implements Parcelable, Serializable {
     @SerializedName("F_Voice03_ALT")
     private String mVoice3Msg;
 
-    @SerializedName("E_Geo")
+    @SerializedName("F_Geo")
     private String mGeo;
 
     public int getId() {
@@ -143,43 +143,43 @@ public class PlantInfo implements Parcelable, Serializable {
         return mGenus;
     }
 
-    public String getmFamily() {
+    public String getFamily() {
         return mFamily;
     }
 
-    public String getmBrief() {
+    public String getBrief() {
         return mBrief;
     }
 
-    public String getmFeature() {
+    public String getFeature() {
         return mFeature;
     }
 
-    public String getmApplication() {
+    public String getApplication() {
         return mApplication;
     }
 
-    public String getmSummary() {
+    public String getSummary() {
         return mSummary;
     }
 
-    public String getmLocation() {
+    public String getLocation() {
         return mLocation;
     }
 
-    public String[] getmLocationList() {
+    public String[] getLocationList() {
         return mLocation.split(Constants.PLANT_LOCATION_SEPARATOR);
     }
 
-    public String getmKeywords() {
+    public String getKeywords() {
         return mKeywords;
     }
 
-    public String getmUpdate() {
+    public String getUpdate() {
         return mUpdate;
     }
 
-    public String getmVedioUrl() {
+    public String getVedioUrl() {
         return mVedioUrl;
     }
 
@@ -207,15 +207,66 @@ public class PlantInfo implements Parcelable, Serializable {
         return result;
     }
 
-    public String getmGeo() {
+    public String getGeo() {
         return mGeo;
     }
 
+    private static boolean compare(List<Pair<String, String>> first,
+                                   List<Pair<String, String>> second) {
+        if (first == second) {
+            return true;
+        }
+
+        if (first == null || second == null || first.size() != second.size()) {
+            return false;
+        }
+
+        for (int index = 0; index < first.size(); index++) {
+            if (!first.get(index).first.equals(second.get(index).first) ||
+                    !first.get(index).second.equals(second.get(index).second)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
     @NonNull
     @Override
     public String toString() {
         return String.format(Locale.getDefault(), "Name=%s PIC_URL=%s FAMILY=%s APP=%s BRIEF=%s NO=%s CID=%s",
                 mNameCh, mPic1Url, mFamily, mApplication, mBrief, mId, mCID);
+    }
+
+    public boolean equals(PlantInfo plantInfo) {
+        if (plantInfo == null) {
+            return false;
+        }
+
+        if (!PlantInfo.compare(getPdfInfos(), plantInfo.getPdfInfos()) ||
+                !PlantInfo.compare(getPicInfos(), plantInfo.getPicInfos()) ||
+                !PlantInfo.compare(getVoiceInfos(), plantInfo.getVoiceInfos())) {
+            return false;
+        }
+
+        return getId() == plantInfo.getId() &&
+                getCID().equals(plantInfo.getCID()) &&
+                getCode().equals(plantInfo.getCode()) &&
+                getTCName().equals(plantInfo.getTCName()) &&
+                getEnName().equals(plantInfo.getEnName()) &&
+                getLatinName().equals(plantInfo.getLatinName()) &&
+                getAlsoKnown().equals(plantInfo.getAlsoKnown()) &&
+                getGenus().equals(plantInfo.getGenus()) &&
+                getFamily().equals(plantInfo.getFamily()) &&
+                getBrief().equals(plantInfo.getBrief()) &&
+                getFeature().equals(plantInfo.getFeature()) &&
+                getApplication().equals(plantInfo.getApplication()) &&
+                getSummary().equals(plantInfo.getSummary()) &&
+                getLocation().equals(plantInfo.getLocation()) &&
+                getLatinName().equals(plantInfo.getLatinName()) &&
+                getKeywords().equals(plantInfo.getKeywords()) &&
+                getUpdate().equals(plantInfo.getUpdate()) &&
+                getVedioUrl().equals(plantInfo.getVedioUrl()) &&
+                getGeo().equals(plantInfo.getGeo());
     }
 
     @Override
