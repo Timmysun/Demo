@@ -6,6 +6,7 @@ import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
 
 import com.timmy.demo.R;
+import com.timmy.demo.event.SplashCompleteEvent;
 import com.timmy.demo.model.DataPool;
 import com.timmy.demo.utils.Utils;
 
@@ -30,7 +31,7 @@ public class SplashViewModel extends AndroidViewModel {
         DataPool.getInstance().retrieveData(getApplication().getApplicationContext());
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void onRetrieveDataStatusChange(Utils.RetrieveDataStatus status) {
         switch (status) {
             case READ_CACHE:
@@ -41,6 +42,7 @@ public class SplashViewModel extends AndroidViewModel {
                 break;
             case READ_CACHE_SUCCESS:
                 mLoadingMessage.set(getApplication().getResources().getString(R.string.splash_loading_cache_success));
+                EventBus.getDefault().post(new SplashCompleteEvent());
                 break;
             case LOAD_DATA:
                 mLoadingMessage.set(getApplication().getResources().getString(R.string.splash_loading_network_data));
@@ -50,6 +52,7 @@ public class SplashViewModel extends AndroidViewModel {
                 break;
             case LOAD_DATA_SUCCESS:
                 mLoadingMessage.set(getApplication().getResources().getString(R.string.splash_loading_network_success));
+                EventBus.getDefault().post(new SplashCompleteEvent());
                 break;
         }
     }

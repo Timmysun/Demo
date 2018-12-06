@@ -48,6 +48,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="-30dp"
             android:background="@drawable/bg_exhibit_name"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
             android:gravity="center"
             android:text="台灣動物區"
             android:textColor="@android:color/black"
