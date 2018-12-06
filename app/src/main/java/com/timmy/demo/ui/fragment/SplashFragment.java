@@ -20,15 +20,20 @@ public class SplashFragment extends Fragment {
         return new SplashFragment();
     }
 
+    private SplashViewModel mViewModel;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        SplashViewModel viewModel = ViewModelProviders.of(this).get(SplashViewModel.class);
-        viewModel.retrieveData();
+        mViewModel = ViewModelProviders.of(this).get(SplashViewModel.class);
         SplashFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.splash_fragment, container, false);
-        binding.setLoadingMessage(viewModel.getLoadingMessage());
+        binding.setLoadingMessage(mViewModel.getLoadingMessage());
         return binding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mViewModel.retrieveData();
+    }
 }

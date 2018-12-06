@@ -104,7 +104,9 @@ public class DataPool{
 
                         @Override
                         public void onError(Throwable e) {
-                            EventBus.getDefault().post(Utils.RetrieveDataStatus.LOAD_DATA_FAIL);
+                            if (mExhibitPlantInfos == null) {
+                                EventBus.getDefault().post(Utils.RetrieveDataStatus.LOAD_DATA_FAIL);
+                            }
                             e.printStackTrace();
                         }
 

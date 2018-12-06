@@ -12,7 +12,7 @@ android {
     buildTypes {
 
         debug {
-            buildConfigField "boolean", "LOAD_DATA_EVERY_TIME", "true"
+            buildConfigField "boolean", "LOAD_DATA_EVERY_TIME", "false"
         }
 
         release {
