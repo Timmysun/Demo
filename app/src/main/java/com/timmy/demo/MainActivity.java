@@ -2,6 +2,7 @@ package com.timmy.demo;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.timmy.demo.event.ExhibitAnimationCompleteEvent;
@@ -41,8 +42,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (getSupportFragmentManager().findFragmentById(R.id.container) == mExhibitListFragment) {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
+        if (fragment == mExhibitListFragment) {
             hideExhibitListFragment();
+        } else if (fragment == mPlantListFragment) {
+            hidePlantListFragment();
         } else {
             super.onBackPressed();
             finish();
