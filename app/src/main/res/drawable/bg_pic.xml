@@ -8,16 +8,11 @@
                 android:left="@dimen/common_bg_outer_padding"
                 android:right="@dimen/common_bg_outer_padding"
                 android:top="@dimen/common_bg_outer_padding" />
-            <corners
-                android:bottomLeftRadius="@dimen/common_bg_bigger_radius"
-                android:topLeftRadius="@dimen/common_bg_bigger_radius" />
+            <corners android:radius="@dimen/common_bg_smaller_radius" />
         </shape>
     </item>
     <item>
         <shape android:shape="rectangle">
-            <corners
-                android:bottomLeftRadius="@dimen/common_bg_bigger_radius"
-                android:topLeftRadius="@dimen/common_bg_bigger_radius" />
             <padding
                 android:bottom="@dimen/common_bg_inner_padding"
                 android:left="@dimen/common_bg_inner_padding"

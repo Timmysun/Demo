@@ -27,7 +27,7 @@ public class PlantListViewModel extends AndroidViewModel {
         DataPool.getInstance().setCurrentPlant(index);
     }
 
-    public void onClickView(View view){
+    public void onClickView(View view) {
         EventBus.getDefault().post(PlantListDisplayEvent.HIDE_PLANT_LIST);
     }
 }

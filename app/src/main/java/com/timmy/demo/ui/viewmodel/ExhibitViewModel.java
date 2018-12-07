@@ -4,7 +4,6 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 
 import com.timmy.demo.event.ExhibitInfoChangeEvent;
@@ -20,9 +19,9 @@ import org.greenrobot.eventbus.ThreadMode;
 public class ExhibitViewModel extends AndroidViewModel {
 
     private ObservableField<ExhibitInfo> mExhibitInfo = new ObservableField<>();
+
     public ExhibitViewModel(@NonNull Application application) {
         super(application);
-        Log.e("Timmy", "exhibit mv created " + this);
         EventBus.getDefault().register(this);
     }
 
@@ -34,7 +33,6 @@ public class ExhibitViewModel extends AndroidViewModel {
     protected void onCleared() {
         super.onCleared();
         EventBus.getDefault().unregister(this);
-        Log.e("Timmy", "exhibit mv destroyed " + this);
     }
 
     public void updateExhibitInfo() {
@@ -49,11 +47,11 @@ public class ExhibitViewModel extends AndroidViewModel {
         mExhibitInfo.set(event.getExhibitInfo());
     }
 
-    public void onExhibitListClick(View view){
+    public void onExhibitListClick(View view) {
         EventBus.getDefault().post(ExhibitListDisplayEvent.SHOW_EXHIBIT_LIST);
     }
 
-    public void onPlantListClick(View view){
+    public void onPlantListClick(View view) {
         EventBus.getDefault().post(PlantListDisplayEvent.SHOW_PLANT_LIST);
     }
 

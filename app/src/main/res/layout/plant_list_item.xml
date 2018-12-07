@@ -3,11 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="plantInfo"
-            type="com.timmy.demo.model.server.result.plant.PlantInfo"/>
+            type="com.timmy.demo.model.server.result.plant.PlantInfo" />
 
     </data>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
@@ -16,25 +18,25 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="-30dp"
             android:layout_toRightOf="@+id/plant_icon"
             android:background="@drawable/bg_plant_list_name"
-            android:textSize="15sp"
-            android:layout_centerVertical="true"
-            android:paddingRight="15dp"
             android:paddingLeft="35dp"
+            android:paddingRight="15dp"
+            android:text="@{plantInfo.tCName}"
             android:textColor="@android:color/black"
-            android:layout_marginLeft="-30dp"
-            android:text="@{plantInfo.tCName}"/>
+            android:textSize="15sp" />
 
         <ImageView
             android:id="@+id/plant_icon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@drawable/bg_exhibit_list_item_pic"
-            android:layout_centerVertical="true"
+            android:layout_width="@dimen/common_icon_size"
+            android:layout_height="@dimen/common_icon_size"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/common_margin_20"
+            android:background="@drawable/bg_plant_list_item_pic"
             android:scaleType="center"
-            android:layout_marginLeft="20dp"
-            app:loadIconImage="@{plantInfo.picInfos.get(0).first}"/>
+            app:loadIconImage="@{plantInfo.picInfos.get(0).first}" />
     </RelativeLayout>
 </layout>

@@ -51,12 +51,12 @@ public class ExhibitFragment extends Fragment {
 
     @Override
     public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
-
         final Animation animation = AnimationUtils.loadAnimation(getContext(),
-                enter ?  R.anim.fragment_fade_in : R.anim.fragment_fade_out);
+                enter ? R.anim.fragment_fade_in : R.anim.fragment_fade_out);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) { }
+            public void onAnimationStart(Animation animation) {
+            }
 
             @Override
             public void onAnimationEnd(Animation animation) {
@@ -66,7 +66,8 @@ public class ExhibitFragment extends Fragment {
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) { }
+            public void onAnimationRepeat(Animation animation) {
+            }
         });
 
         return animation;

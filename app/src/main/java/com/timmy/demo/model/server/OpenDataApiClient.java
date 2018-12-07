@@ -25,7 +25,7 @@ public class OpenDataApiClient {
         return sApiClient;
     }
 
-    private OpenDataApiClient(){
+    private OpenDataApiClient() {
         mHttpClient = new OkHttpClient();
         mOpenDataApi = new Retrofit.Builder()
                 .baseUrl(Constants.OPEN_DATA_URL)
@@ -40,11 +40,11 @@ public class OpenDataApiClient {
         return mOpenDataApi;
     }
 
-    public static Single<Response<Exhibit>> getExhibitInfosRx(){
+    public static Single<Response<Exhibit>> getExhibitInfosRx() {
         return OpenDataApiClient.getInstance().openDataApi().getExhibitInfos();
     }
 
-    public static Single<Response<Plant>> getPlantInfosRx(){
+    public static Single<Response<Plant>> getPlantInfosRx() {
         return OpenDataApiClient.getInstance().openDataApi().getPlantInfos();
     }
 

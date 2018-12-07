@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
+
         <import type="android.text.TextUtils" />
 
         <variable
@@ -44,11 +46,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/common_margin_20"
+            android:layout_marginRight="@dimen/common_margin_20"
             android:adjustViewBounds="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/bg_exhibit_pic"
-            android:src="@drawable/formosan_animal_01"
+            android:background="@drawable/bg_pic"
             android:visibility="@{exhibitInfo.picUrl == null ? View.INVISIBLE : View.VISIBLE}"
             app:loadBigImage="@{exhibitInfo.picUrl}" />
 
@@ -59,10 +60,10 @@
             android:layout_above="@+id/exhibit_pic"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="-30dp"
-            android:background="@drawable/bg_exhibit_name"
+            android:background="@drawable/bg_name"
             android:gravity="center"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
+            android:paddingStart="@dimen/common_margin_20"
+            android:paddingEnd="@dimen/common_margin_20"
             android:text="@{exhibitInfo.name}"
             android:textColor="@android:color/black"
             android:textSize="15sp"
@@ -74,7 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/exhibit_pic"
             android:layout_alignBottom="@+id/exhibit_pic"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="@dimen/common_margin_10"
             android:background="#55FFFFFF"
             android:maxWidth="250dp"
             android:text="@{exhibitInfo.memo}"
@@ -92,8 +93,8 @@
             android:layout_marginBottom="-10dp"
             android:background="@drawable/bg_exhibit_category"
             android:gravity="center"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
+            android:paddingStart="@dimen/common_margin_5"
+            android:paddingEnd="@dimen/common_margin_5"
             android:text="@{exhibitInfo.category}"
             android:textColor="@android:color/black"
             android:textSize="12dp"
@@ -107,8 +108,8 @@
             android:layout_alignStart="@+id/exhibit_pic"
             android:layout_alignEnd="@+id/exhibit_pic"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/bg_exhibit_info"
+            android:layout_marginTop="@dimen/common_margin_10"
+            android:background="@drawable/bg_info"
             android:gravity="center"
             android:text="@{exhibitInfo.info}"
             android:textColor="@android:color/black"

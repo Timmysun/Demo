@@ -14,5 +14,5 @@
     <string name="tab_feature">特徵</string>
     <string name="tab_func">功能</string>
     <string name="tab_intro">基本訊息</string>
-    <string name="tab_intro_message">%1$s %2$s/n英文名：%3$s/n拉丁名：%4$s/n別名：%5$s/n最後更新時間：%6$s</string>
+    <string name="tab_intro_message">%1$s %2$s\n英文名：%3$s\n拉丁名：%4$s\n別名：%5$s\n最後更新時間：%6$s</string>
 </resources>

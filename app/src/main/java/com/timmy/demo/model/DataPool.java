@@ -32,7 +32,7 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
-public class DataPool{
+public class DataPool {
     private static final String TAG = "DataPool";
 
     private static DataPool sInstance;
@@ -44,7 +44,8 @@ public class DataPool{
     private int mCurrentExhibit = -1;
     private int mCurrentPlant = -1;
 
-    private DataPool() { }
+    private DataPool() {
+    }
 
     public static synchronized DataPool getInstance() {
         if (sInstance == null) {
@@ -84,10 +85,6 @@ public class DataPool{
         EventBus.getDefault().post(new PlantInfoChangeEvent(getCurrentPlantInfo()));
     }
 
-    public int getCurrentPlant() {
-        return mCurrentPlant;
-    }
-
     private Observable<Pair<ExhibitResult, PlantResult>> retrieveDataFromOpenDataApi() {
         EventBus.getDefault().post(RetrieveDataStatusEvent.LOAD_DATA);
         Log.d(TAG, "load data from network");
@@ -111,52 +108,54 @@ public class DataPool{
                             return getDataFromCache(context);
                         }
                     }).subscribeOn(Schedulers.io())
-                    .flatMap(new Function<Pair<ExhibitResult, PlantResult>, Observable<Pair<ExhibitResult, PlantResult>>>() {
-                        @Override
-                        public Observable<Pair<ExhibitResult, PlantResult>> apply(Pair<ExhibitResult, PlantResult> exhibitPlantPair) {
-                            if (exhibitPlantPair.first != null) {
-                                mExhibitPlantInfos = new ExhibitPlantInfos(exhibitPlantPair.first, exhibitPlantPair.second);
-                            }
-                            if (mExhibitPlantInfos == null || BuildConfig.LOAD_DATA_EVERY_TIME) {
-                                return retrieveDataFromOpenDataApi();
-                            }
-                            return null;
-                        }
-                    })
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeWith(new DisposableObserver<Pair<ExhibitResult, PlantResult>>() {
-                        @Override
-                        public void onNext(Pair<ExhibitResult, PlantResult> result) {
-                            Log.d(TAG, "load data from network complete");
-                            if (mExhibitPlantInfos != null) {
-                                if (mExhibitPlantInfos.updateExhibitResult(result.first)) {
-                                    Log.d(TAG, "exhibit data changes, save to cache.");
-                                    Utils.saveToFile(context, result.first, Constants.EXHIBIT_CACHE_FILE);
+                            .flatMap(new Function<Pair<ExhibitResult, PlantResult>, Observable<Pair<ExhibitResult, PlantResult>>>() {
+                                @Override
+                                public Observable<Pair<ExhibitResult, PlantResult>> apply(Pair<ExhibitResult, PlantResult> exhibitPlantPair) {
+                                    if (exhibitPlantPair.first != null) {
+                                        mExhibitPlantInfos = new ExhibitPlantInfos(exhibitPlantPair.first, exhibitPlantPair.second);
+                                    }
+                                    //debug will not reload network data every time.
+                                    if (mExhibitPlantInfos == null || BuildConfig.LOAD_DATA_EVERY_TIME) {
+                                        return retrieveDataFromOpenDataApi();
+                                    }
+                                    return null;
                                 }
-                                if (mExhibitPlantInfos.updatePlantResult(result.second)) {
-                                    Log.d(TAG, "plants data changes, save to cache.");
-                                    Utils.saveToFile(context, result.second, Constants.PLANT_CACHE_FILE);
+                            })
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribeWith(new DisposableObserver<Pair<ExhibitResult, PlantResult>>() {
+                                @Override
+                                public void onNext(Pair<ExhibitResult, PlantResult> result) {
+                                    Log.d(TAG, "load data from network complete");
+                                    if (mExhibitPlantInfos != null) {
+                                        if (mExhibitPlantInfos.updateExhibitResult(result.first)) {
+                                            Log.d(TAG, "exhibit data changes, save to cache.");
+                                            Utils.saveToFile(context, result.first, Constants.EXHIBIT_CACHE_FILE);
+                                        }
+                                        if (mExhibitPlantInfos.updatePlantResult(result.second)) {
+                                            Log.d(TAG, "plants data changes, save to cache.");
+                                            Utils.saveToFile(context, result.second, Constants.PLANT_CACHE_FILE);
+                                        }
+                                    } else {
+                                        Log.d(TAG, "save network data to cache.");
+                                        mExhibitPlantInfos = new ExhibitPlantInfos(result.first, result.second);
+                                        Utils.saveToFile(context, result.first, Constants.EXHIBIT_CACHE_FILE);
+                                        Utils.saveToFile(context, result.second, Constants.PLANT_CACHE_FILE);
+                                    }
+                                    EventBus.getDefault().post(RetrieveDataStatusEvent.LOAD_DATA_SUCCESS);
                                 }
-                            } else {
-                                Log.d(TAG, "save network data to cache.");
-                                mExhibitPlantInfos = new ExhibitPlantInfos(result.first, result.second);
-                                Utils.saveToFile(context, result.first, Constants.EXHIBIT_CACHE_FILE);
-                                Utils.saveToFile(context, result.second, Constants.PLANT_CACHE_FILE);
-                            }
-                            EventBus.getDefault().post(RetrieveDataStatusEvent.LOAD_DATA_SUCCESS);
-                        }
 
-                        @Override
-                        public void onError(Throwable e) {
-                            if (mExhibitPlantInfos == null) {
-                                EventBus.getDefault().post(RetrieveDataStatusEvent.LOAD_DATA_FAIL);
-                            }
-                            e.printStackTrace();
-                        }
+                                @Override
+                                public void onError(Throwable e) {
+                                    if (mExhibitPlantInfos == null) {
+                                        EventBus.getDefault().post(RetrieveDataStatusEvent.LOAD_DATA_FAIL);
+                                    }
+                                    e.printStackTrace();
+                                }
 
-                        @Override
-                        public void onComplete() { }
-                    }));
+                                @Override
+                                public void onComplete() {
+                                }
+                            }));
         } catch (Exception e) {
             e.printStackTrace();
         }

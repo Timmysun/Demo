@@ -26,9 +26,6 @@ public class PlantResult extends ResultBase implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format(Locale.getDefault(), "limit=%d offset=%d count=%d sort=%s\n",
                 getLimit(), getOffset(), getCount(), getSort()));
-//        for (PlantInfo plantInfo : mPlantInfos) {
-//            sb.append("[" + plantInfo.toString() + "]\n");
-//        }
         return sb.toString();
     }
 

@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#000000</color>
+    <color name="exhibit_list_item_pic_bg_color">#FF999900</color>
+    <color name="plant_list_item_pic_bg_color">#FF009999</color>
+    <color name="exhibit_category_bg_color">#FFFF9999</color>
+    <color name="common_bg_outer_color">#FF6F6F6F</color>
+    <color name="common_bg_inner_color">#FFDADADA</color>
 </resources>

@@ -1,9 +1,12 @@
 package com.timmy.demo.event;
 
-public class DisplayEvent {
+/**
+ * EventBus event for display
+ */
+public class BaseDisplayEvent {
     private boolean mDisplay;
 
-    DisplayEvent(boolean display) {
+    BaseDisplayEvent(boolean display) {
         mDisplay = display;
     }
 

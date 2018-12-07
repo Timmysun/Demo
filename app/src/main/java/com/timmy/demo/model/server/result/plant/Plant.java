@@ -11,6 +11,7 @@ public class Plant {
     public PlantResult getResult() {
         return mResult;
     }
+
     @NonNull
     @Override
     public String toString() {

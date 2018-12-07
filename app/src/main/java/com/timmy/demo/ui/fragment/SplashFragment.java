@@ -23,6 +23,7 @@ public class SplashFragment extends Fragment {
     }
 
     private SplashViewModel mViewModel;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -41,7 +42,7 @@ public class SplashFragment extends Fragment {
 
     @Override
     public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
-            return enter ? super.onCreateAnimation(transit, enter, nextAnim ) :
-                    AnimationUtils.loadAnimation(getContext(), R.anim.fragment_fade_out);
+        return enter ? super.onCreateAnimation(transit, enter, nextAnim) :
+                AnimationUtils.loadAnimation(getContext(), R.anim.fragment_fade_out);
     }
 }

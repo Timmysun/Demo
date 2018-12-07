@@ -50,14 +50,13 @@
             android:id="@+id/plant_pic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxHeight="300dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="@dimen/common_margin_20"
             android:layout_marginTop="70dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="@dimen/common_margin_20"
             android:adjustViewBounds="true"
-            android:background="@drawable/bg_exhibit_pic"
-            android:src="@drawable/formosan_animal_01"
+            android:background="@drawable/bg_pic"
+            android:maxHeight="300dp"
             app:loadBigImage="@{plantInfo.picInfos.get(0).first}" />
 
         <TextView
@@ -66,10 +65,10 @@
             android:layout_height="60dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
-            android:background="@drawable/bg_exhibit_name"
+            android:background="@drawable/bg_name"
             android:gravity="center"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
+            android:paddingStart="@dimen/common_margin_20"
+            android:paddingEnd="@dimen/common_margin_20"
             android:text="@{plantInfo.tCName}"
             android:textColor="@android:color/black"
             android:textSize="15sp" />
@@ -82,7 +81,7 @@
             android:layout_alignEnd="@+id/plant_pic"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/common_margin_10"
             android:orientation="vertical">
 
             <android.support.design.widget.TabLayout
@@ -123,9 +122,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_plant_info"
+                android:padding="@dimen/common_margin_5"
                 android:scrollbars="vertical"
                 android:text="@{infoText}"
-                android:padding="5dp"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />
         </LinearLayout>

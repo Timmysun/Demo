@@ -44,12 +44,10 @@ public class PlantFragment extends Fragment {
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
         return mBinding.getRoot();
@@ -72,6 +70,6 @@ public class PlantFragment extends Fragment {
     @Override
     public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
         return AnimationUtils.loadAnimation(getContext(),
-                enter ?  R.anim.fragment_fade_in : R.anim.fragment_fade_out);
+                enter ? R.anim.fragment_fade_in : R.anim.fragment_fade_out);
     }
 }

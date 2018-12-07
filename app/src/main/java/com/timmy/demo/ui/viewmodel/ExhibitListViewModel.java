@@ -27,7 +27,7 @@ public class ExhibitListViewModel extends AndroidViewModel {
         DataPool.getInstance().setCurrentExhibit(index);
     }
 
-    public void onClickView(View view){
+    public void onClickView(View view) {
         EventBus.getDefault().post(ExhibitListDisplayEvent.HIDE_EXHIBIT_LIST);
     }
 }

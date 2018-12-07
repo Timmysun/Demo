@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <set>
     <translate xmlns:android="http://schemas.android.com/apk/res/android"
+        android:duration="@integer/fragment_animation_duration"
         android:fromXDelta="0%"
-        android:toXDelta="70%"
         android:interpolator="@android:anim/decelerate_interpolator"
-        android:duration="@integer/fragment_animation_duration"/>
+        android:toXDelta="70%" />
 </set>

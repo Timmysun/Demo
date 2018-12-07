@@ -54,7 +54,7 @@ public class PlantListFragment extends Fragment {
     @Override
     public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
         final Animation animation = AnimationUtils.loadAnimation(getContext(),
-                enter ?  R.anim.fragment_plant_list_move_in : R.anim.fragment_plant_list_move_out);
+                enter ? R.anim.fragment_plant_list_move_in : R.anim.fragment_plant_list_move_out);
         return animation;
     }
 }

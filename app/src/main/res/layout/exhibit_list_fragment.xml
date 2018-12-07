@@ -18,8 +18,8 @@
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
         android:baselineAligned="false"
-        android:weightSum="1"
         android:onClick="@{viewModel::onClickView}"
+        android:weightSum="1"
         tools:context=".ui.fragment.ExhibitListFragment">
 
 
@@ -29,9 +29,9 @@
             android:layout_height="match_parent"
             android:layout_weight="0.7"
             android:adapter="@{adapter}"
-            android:dividerHeight="0dp"
+            android:background="#FF5A5A5A"
             android:divider="@android:color/transparent"
-            android:background="#FF5A5A5A" />
+            android:dividerHeight="0dp" />
 
     </LinearLayout>
 </layout>

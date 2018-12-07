@@ -2,31 +2,28 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#ff6F6F6F" />
-
+            <solid android:color="@color/common_bg_outer_color" />
             <padding
-                android:bottom="10dp"
-                android:left="10dp"
-                android:right="10dp"
-                android:top="10dp" />
-
+                android:bottom="@dimen/common_bg_outer_padding"
+                android:left="@dimen/common_bg_outer_padding"
+                android:right="@dimen/common_bg_outer_padding"
+                android:top="@dimen/common_bg_outer_padding" />
             <corners
-                android:bottomRightRadius="30dp"
-                android:topRightRadius="30dp" />
+                android:bottomRightRadius="@dimen/common_bg_bigger_radius"
+                android:topRightRadius="@dimen/common_bg_bigger_radius" />
         </shape>
     </item>
     <item>
         <shape android:shape="rectangle">
             <corners
-                android:bottomRightRadius="30dp"
-                android:topRightRadius="30dp" />
+                android:bottomRightRadius="@dimen/common_bg_bigger_radius"
+                android:topRightRadius="@dimen/common_bg_bigger_radius" />
             <padding
-                android:bottom="5dp"
-                android:left="5dp"
-                android:right="5dp"
-                android:top="5dp" />
-
-            <solid android:color="#ffDADADA" />
+                android:bottom="@dimen/common_bg_inner_padding"
+                android:left="@dimen/common_bg_inner_padding"
+                android:right="@dimen/common_bg_inner_padding"
+                android:top="@dimen/common_bg_inner_padding" />
+            <solid android:color="@color/common_bg_inner_color" />
         </shape>
     </item>
 </layer-list>

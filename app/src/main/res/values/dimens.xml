@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="exhibit_list_pic_padding">10dp</dimen>
+    <dimen name="common_bg_smaller_radius">5dp</dimen>
+    <dimen name="common_bg_radius">10dp</dimen>
+    <dimen name="common_bg_outer_padding">10dp</dimen>
+    <dimen name="common_bg_padding">3dp</dimen>
+    <dimen name="common_bg_bigger_radius">30dp</dimen>
+    <dimen name="common_bg_inner_padding">5dp</dimen>
+    <dimen name="common_margin_20">20dp</dimen>
+    <dimen name="common_margin_10">10dp</dimen>
+    <dimen name="common_margin_5">5dp</dimen>
+    <dimen name="common_icon_size">60dp</dimen>
 </resources>

@@ -86,7 +86,6 @@ public class PlantInfo implements Parcelable, Serializable {
     @SerializedName("F_pdf02_ALT")
     private String mPdf2Msg;
 
-
     @SerializedName("F_Voice01_URL")
     private String mVoice1Url;
     @SerializedName("F_Voice01_ALT")
@@ -225,7 +224,7 @@ public class PlantInfo implements Parcelable, Serializable {
         }
         return true;
     }
-    
+
     @NonNull
     @Override
     public String toString() {

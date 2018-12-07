@@ -30,6 +30,7 @@ public class PlantViewModel extends AndroidViewModel {
     public ObservableField<PlantInfo> getCurrentExhibitInfo() {
         return mPlantInfo;
     }
+
     public ObservableField<String> getPlantMessage() {
         return mPlantMessage;
     }
@@ -52,11 +53,11 @@ public class PlantViewModel extends AndroidViewModel {
         mPlantInfo.set(event.getPlantInfo());
     }
 
-    public void onExhibitListClick(View view){
+    public void onExhibitListClick(View view) {
         EventBus.getDefault().post(ExhibitListDisplayEvent.SHOW_EXHIBIT_LIST);
     }
 
-    public void onPlantListClick(View view){
+    public void onPlantListClick(View view) {
         EventBus.getDefault().post(PlantListDisplayEvent.SHOW_PLANT_LIST);
 
     }
