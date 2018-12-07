@@ -9,6 +9,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.timmy.demo.R;
 import com.timmy.demo.databinding.SplashFragmentBinding;
@@ -35,5 +37,11 @@ public class SplashFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mViewModel.retrieveData();
+    }
+
+    @Override
+    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+            return enter ? super.onCreateAnimation(transit, enter, nextAnim ) :
+                    AnimationUtils.loadAnimation(getContext(), R.anim.fragment_fade_out);
     }
 }

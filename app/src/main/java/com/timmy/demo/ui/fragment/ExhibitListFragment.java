@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.timmy.demo.R;
 
@@ -21,17 +23,14 @@ public class ExhibitListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.exhibit_fragment, container, false);
+        return inflater.inflate(R.layout.exhibit_list_fragment, container, false);
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
+    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
+        final Animation animation = AnimationUtils.loadAnimation(getContext(),
+                enter ?  R.anim.fragment_exhibit_list_move_in : R.anim.fragment_exhibit_list_move_out);
+        return animation;
     }
 }

@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
+import com.timmy.demo.event.ExhibitAnimationCompleteEvent;
 import com.timmy.demo.event.SplashCompleteEvent;
+import com.timmy.demo.ui.fragment.ExhibitFragment;
 import com.timmy.demo.ui.fragment.ExhibitListFragment;
 import com.timmy.demo.ui.fragment.SplashFragment;
 
@@ -15,6 +17,7 @@ import org.greenrobot.eventbus.ThreadMode;
 public class MainActivity extends AppCompatActivity {
 
     private Handler mHandler;
+    private boolean mIsSplashCompleteDone = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,14 +32,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.POSTING)
-    public void onSplashComplete(SplashCompleteEvent event) {
-        EventBus.getDefault().unregister(MainActivity.this);
+    synchronized public void onSplashComplete(SplashCompleteEvent event) {
+        if (!mIsSplashCompleteDone) {
+            mIsSplashCompleteDone = true;
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container, ExhibitFragment.newInstance())
+                            .commitNow();
+                }
+            }, 1000);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.POSTING)
+    public void onExhibitAnimationComplete(ExhibitAnimationCompleteEvent event) {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.fragment_fade_in, R.anim.fragment_fade_out)
-                        .replace(R.id.container, ExhibitListFragment.newInstance())
+                        .add(R.id.container, ExhibitListFragment.newInstance())
                         .commitNow();
             }
         }, 1000);
