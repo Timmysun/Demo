@@ -36,6 +36,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().findFragmentById(R.id.container) == mExhibitListFragment) {
+            hideExhibitListFragment();
+        } else {
+            super.onBackPressed();
+            finish();
+        }
+    }
+
     @Subscribe(threadMode = ThreadMode.POSTING)
     synchronized public void onSplashComplete(SplashCompleteEvent event) {
         if (!mIsSplashCompleteDone) {

@@ -6,6 +6,7 @@
     <data>
 
         <import type="android.view.View" />
+        <import type="android.text.TextUtils" />
 
         <variable
             name="viewModel"
@@ -71,17 +72,16 @@
             android:id="@+id/exhibit_memo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/exhibit_pic"
             android:layout_alignEnd="@+id/exhibit_pic"
             android:layout_alignBottom="@+id/exhibit_pic"
-            android:layout_marginStart="50dp"
             android:layout_marginEnd="10dp"
+            android:maxWidth="250dp"
             android:background="#55FFFFFF"
             android:text="@{exhibitInfo.memo}"
             android:textAlignment="viewEnd"
             android:textColor="@android:color/black"
             android:textSize="12sp"
-            android:visibility="@{exhibitInfo.memo == null ? View.INVISIBLE : View.VISIBLE}" />
+            android:visibility="@{exhibitInfo.memo == null || TextUtils.isEmpty(exhibitInfo.memo) ? View.INVISIBLE : View.VISIBLE}" />
 
         <TextView
             android:id="@+id/exhibit_category"
