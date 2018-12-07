@@ -62,8 +62,16 @@ public class Utils {
         return null;
     }
 
-    @BindingAdapter({"app:imageUrl"})
-    public static void loadImage(final ImageView imageView, final String imageUrl) {
+    @BindingAdapter({"app:loadBigImage"})
+    public static void loadBigImage(final ImageView imageView, String imageUrl) {
+        Picasso.get()
+                .load(imageUrl)
+                .error(R.drawable.transparent_drawable)
+                .into(imageView);
+    }
+
+    @BindingAdapter({"app:loadIconImage"})
+    public static void loadIconImage(final ImageView imageView, final String imageUrl) {
         if (!TextUtils.isEmpty(imageUrl)) {
             Picasso.get()
                     .load(imageUrl)

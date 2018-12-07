@@ -59,7 +59,8 @@ public class ExhibitPlantInfos {
     }
 
     List<PlantInfo> getExhibitPlants(int exhibitIndex) {
-        return mExhibitToPlant.get(exhibitIndex).second;
+        return exhibitIndex >= 0 && exhibitIndex < mExhibitToPlant.size() ?
+                mExhibitToPlant.get(exhibitIndex).second : null;
     }
 
     public List<ExhibitInfo> getExhibitList() {

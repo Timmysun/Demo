@@ -35,6 +35,6 @@
             android:layout_alignParentEnd="true"
             android:scaleType="center"
             android:layout_marginRight="20dp"
-            app:imageUrl="@{exhibitInfo.picUrl}"/>
+            app:loadIconImage="@{exhibitInfo.picUrl}"/>
     </RelativeLayout>
 </layout>

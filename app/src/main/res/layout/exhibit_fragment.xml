@@ -50,7 +50,7 @@
             android:background="@drawable/bg_exhibit_pic"
             android:src="@drawable/formosan_animal_01"
             android:visibility="@{exhibitInfo.picUrl == null ? View.INVISIBLE : View.VISIBLE}"
-            app:imageSrc="@{exhibitInfo.picUrl}" />
+            app:loadBigImage="@{exhibitInfo.picUrl}" />
 
         <TextView
             android:id="@+id/exhibit_name"

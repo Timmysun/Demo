@@ -9,4 +9,9 @@
     <string name="splash_loading_network_fail">Loading data fail, please check network status…</string>
     <string name="exhibit_list_button_text">Exhibit List</string>
     <string name="plant_list_button_text">Plant List</string>
+    <string name="tab_brief">Brief</string>
+    <string name="tab_feature">Feature</string>
+    <string name="tab_func">Function</string>
+    <string name="tab_intro">Introduce</string>
+    <string name="tab_intro_message">%1$s %2$s\nEnglish Name:%3$s\nLatin Name:%4$s\nAlso Known:%5$s\nLast Update:%6$s</string>
 </resources>

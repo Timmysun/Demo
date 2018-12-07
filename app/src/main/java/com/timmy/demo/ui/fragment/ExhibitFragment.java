@@ -46,6 +46,7 @@ public class ExhibitFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mViewModel.updateExhibitInfo();
     }
 
     @Override
@@ -59,7 +60,9 @@ public class ExhibitFragment extends Fragment {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                EventBus.getDefault().post(new ExhibitAnimationCompleteEvent());
+                if (mViewModel.getCurrentExhibitInfo().get() == null) {
+                    EventBus.getDefault().post(new ExhibitAnimationCompleteEvent());
+                }
             }
 
             @Override

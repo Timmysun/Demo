@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+
+        <variable
+            name="viewModel"
+            type="com.timmy.demo.ui.viewmodel.PlantViewModel" />
+
+        <variable
+            name="plantInfo"
+            type="android.databinding.ObservableField&lt;com.timmy.demo.model.server.result.plant.PlantInfo&gt;" />
+
+        <variable
+            name="infoText"
+            type="android.databinding.ObservableField&lt;String&gt;" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.fragment.ExhibitFragment">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:drawableLeft="@drawable/ic_left_arrow"
+            android:onClick="@{viewModel::onExhibitListClick}"
+            android:text="@string/exhibit_list_button_text" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@drawable/ic_right_arrow"
+            android:onClick="@{viewModel::onPlantListClick}"
+            android:text="@string/plant_list_button_text" />
+
+        <ImageView
+            android:id="@+id/plant_pic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="300dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="70dp"
+            android:layout_marginRight="20dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/bg_exhibit_pic"
+            android:src="@drawable/formosan_animal_01"
+            app:loadBigImage="@{plantInfo.picInfos.get(0).first}" />
+
+        <TextView
+            android:id="@+id/plant_name"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/bg_exhibit_name"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="@{plantInfo.tCName}"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/plant_pic"
+            android:layout_alignStart="@+id/plant_pic"
+            android:layout_alignEnd="@+id/plant_pic"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/bg_plant_tab"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="@android:color/holo_green_light"
+                app:tabIndicatorHeight="2dp"
+                app:tabMode="fixed"
+                app:tabTextColor="@android:color/black">
+
+                <android.support.design.widget.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tab_intro" />
+
+                <android.support.design.widget.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tab_brief" />
+
+                <android.support.design.widget.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tab_feature" />
+
+                <android.support.design.widget.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tab_func" />
+
+            </android.support.design.widget.TabLayout>
+
+            <TextView
+                android:id="@+id/plant_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_plant_info"
+                android:scrollbars="vertical"
+                android:text="@{infoText}"
+                android:padding="5dp"
+                android:textColor="@android:color/black"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

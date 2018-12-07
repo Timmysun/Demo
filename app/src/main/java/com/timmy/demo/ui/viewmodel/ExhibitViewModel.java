@@ -2,17 +2,15 @@ package com.timmy.demo.ui.viewmodel;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
-import android.databinding.BindingAdapter;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
-import com.timmy.demo.R;
 import com.timmy.demo.event.ExhibitInfoChangeEvent;
 import com.timmy.demo.event.ExhibitListDisplayEvent;
 import com.timmy.demo.event.PlantListDisplayEvent;
+import com.timmy.demo.model.DataPool;
 import com.timmy.demo.model.server.result.exhibit.ExhibitInfo;
 
 import org.greenrobot.eventbus.EventBus;
@@ -24,6 +22,7 @@ public class ExhibitViewModel extends AndroidViewModel {
     private ObservableField<ExhibitInfo> mExhibitInfo = new ObservableField<>();
     public ExhibitViewModel(@NonNull Application application) {
         super(application);
+        Log.e("Timmy", "exhibit mv created " + this);
         EventBus.getDefault().register(this);
     }
 
@@ -35,6 +34,14 @@ public class ExhibitViewModel extends AndroidViewModel {
     protected void onCleared() {
         super.onCleared();
         EventBus.getDefault().unregister(this);
+        Log.e("Timmy", "exhibit mv destroyed " + this);
+    }
+
+    public void updateExhibitInfo() {
+        ExhibitInfo exhibitInfo = DataPool.getInstance().getCurrentExhibitInfo();
+        if (exhibitInfo != null) {
+            mExhibitInfo.set(exhibitInfo);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
@@ -50,11 +57,5 @@ public class ExhibitViewModel extends AndroidViewModel {
         EventBus.getDefault().post(PlantListDisplayEvent.SHOW_PLANT_LIST);
     }
 
-    @BindingAdapter({"app:imageSrc"})
-    public static void loadImage(final ImageView imageView, String imageUrl) {
-        Picasso.get()
-                .load(imageUrl)
-                .error(R.drawable.transparent_drawable)
-                .into(imageView);
-    }
+
 }

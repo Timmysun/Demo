@@ -6,11 +6,14 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.timmy.demo.event.ExhibitAnimationCompleteEvent;
+import com.timmy.demo.event.ExhibitInfoChangeEvent;
 import com.timmy.demo.event.ExhibitListDisplayEvent;
+import com.timmy.demo.event.PlantInfoChangeEvent;
 import com.timmy.demo.event.PlantListDisplayEvent;
 import com.timmy.demo.event.SplashCompleteEvent;
 import com.timmy.demo.ui.fragment.ExhibitFragment;
 import com.timmy.demo.ui.fragment.ExhibitListFragment;
+import com.timmy.demo.ui.fragment.PlantFragment;
 import com.timmy.demo.ui.fragment.PlantListFragment;
 import com.timmy.demo.ui.fragment.SplashFragment;
 
@@ -26,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private ExhibitListFragment mExhibitListFragment;
     private PlantListFragment mPlantListFragment;
 
+    private ExhibitFragment mExhibitFragment;
+    private PlantFragment mPlantFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,14 +68,7 @@ public class MainActivity extends AppCompatActivity {
     synchronized public void onSplashComplete(SplashCompleteEvent event) {
         if (!mIsSplashCompleteDone) {
             mIsSplashCompleteDone = true;
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.container, ExhibitFragment.newInstance())
-                            .commitNow();
-                }
-            }, 1000);
+            showExhibitFragment();
         }
     }
 
@@ -94,6 +92,22 @@ public class MainActivity extends AppCompatActivity {
             showPlantListFragment();
         } else {
             hidePlantListFragment();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void onPlantInfoChange(PlantInfoChangeEvent event) {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
+        if (fragment != mPlantFragment) {
+            showPlantFragment();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void onExhibitInfoChange(ExhibitInfoChangeEvent event) {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
+        if (fragment != mExhibitFragment) {
+            showExhibitFragment();
         }
     }
 
@@ -148,6 +162,35 @@ public class MainActivity extends AppCompatActivity {
                             .remove(mPlantListFragment)
                             .commitNow();
                 }
+            }
+        });
+    }
+
+    private void showExhibitFragment() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (mExhibitFragment == null) {
+                    mExhibitFragment = ExhibitFragment.newInstance();
+                }
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, mExhibitFragment)
+                        .commitNow();
+            }
+        });
+    }
+
+
+    private void showPlantFragment() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (mPlantFragment == null) {
+                    mPlantFragment = PlantFragment.newInstance();
+                }
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, mPlantFragment)
+                        .commitNow();
             }
         });
     }

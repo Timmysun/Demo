@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.timmy.demo.BuildConfig;
 import com.timmy.demo.event.ExhibitInfoChangeEvent;
+import com.timmy.demo.event.PlantInfoChangeEvent;
 import com.timmy.demo.event.RetrieveDataStatusEvent;
 import com.timmy.demo.model.server.OpenDataApiClient;
 import com.timmy.demo.model.server.result.exhibit.Exhibit;
@@ -70,8 +71,17 @@ public class DataPool{
                 mExhibitPlantInfos.getExhibitList().get(mCurrentExhibit) : null;
     }
 
+    public PlantInfo getCurrentPlantInfo() {
+        List<PlantInfo> plantInfoList = mExhibitPlantInfos.getExhibitPlants(mCurrentExhibit);
+        if (plantInfoList != null && mCurrentPlant >= 0 && mCurrentPlant < plantInfoList.size()) {
+            return plantInfoList.get(mCurrentPlant);
+        }
+        return null;
+    }
+
     public void setCurrentPlant(int index) {
         mCurrentPlant = index;
+        EventBus.getDefault().post(new PlantInfoChangeEvent(getCurrentPlantInfo()));
     }
 
     public int getCurrentPlant() {
