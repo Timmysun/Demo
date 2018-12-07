@@ -17,9 +17,7 @@ public class ExhibitListViewModel extends AndroidViewModel {
 
     public ExhibitListViewModel(@NonNull Application application) {
         super(application);
-        //EventBus.getDefault().register(this);
     }
-
 
     public List<ExhibitInfo> getExhibitList() {
         return DataPool.getInstance().getExhibitList();

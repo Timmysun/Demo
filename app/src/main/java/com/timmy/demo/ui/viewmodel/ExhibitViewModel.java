@@ -12,6 +12,7 @@ import com.squareup.picasso.Picasso;
 import com.timmy.demo.R;
 import com.timmy.demo.event.ExhibitInfoChangeEvent;
 import com.timmy.demo.event.ExhibitListDisplayEvent;
+import com.timmy.demo.event.PlantListDisplayEvent;
 import com.timmy.demo.model.server.result.exhibit.ExhibitInfo;
 
 import org.greenrobot.eventbus.EventBus;
@@ -27,8 +28,13 @@ public class ExhibitViewModel extends AndroidViewModel {
     }
 
     public ObservableField<ExhibitInfo> getCurrentExhibitInfo() {
-        //return DataPool.getInstance().getCurrentExhibitInfo();
         return mExhibitInfo;
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        EventBus.getDefault().unregister(this);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
@@ -41,7 +47,7 @@ public class ExhibitViewModel extends AndroidViewModel {
     }
 
     public void onPlantListClick(View view){
-        //EventBus.getDefault().post(ExhibitListDisplayEvent.HIDE_EXHIBIT_LIST);
+        EventBus.getDefault().post(PlantListDisplayEvent.SHOW_PLANT_LIST);
     }
 
     @BindingAdapter({"app:imageSrc"})

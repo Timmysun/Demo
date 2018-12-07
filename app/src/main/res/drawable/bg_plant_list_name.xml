@@ -11,15 +11,15 @@
                 android:top="10dp" />
 
             <corners
-                android:bottomLeftRadius="30dp"
-                android:topLeftRadius="30dp" />
+                android:bottomRightRadius="30dp"
+                android:topRightRadius="30dp" />
         </shape>
     </item>
     <item>
         <shape android:shape="rectangle">
             <corners
-                android:bottomLeftRadius="30dp"
-                android:topLeftRadius="30dp" />
+                android:bottomRightRadius="30dp"
+                android:topRightRadius="30dp" />
             <padding
                 android:bottom="5dp"
                 android:left="5dp"

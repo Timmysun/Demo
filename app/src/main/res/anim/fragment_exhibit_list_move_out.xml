@@ -2,7 +2,7 @@
 <set>
     <translate xmlns:android="http://schemas.android.com/apk/res/android"
         android:fromXDelta="0%"
-        android:toXDelta="-40%"
+        android:toXDelta="-70%"
         android:interpolator="@android:anim/decelerate_interpolator"
         android:duration="@integer/fragment_animation_duration"/>
 </set>

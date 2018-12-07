@@ -1,19 +1,10 @@
 package com.timmy.demo.model.server.result.exhibit;
 
-import android.databinding.BindingAdapter;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
-import android.widget.ImageView;
 
 import com.google.gson.annotations.SerializedName;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
-import com.timmy.demo.R;
 
 import java.io.Serializable;
 import java.util.Locale;
@@ -145,31 +136,5 @@ public class ExhibitInfo implements Parcelable, Serializable {
         dest.writeString(mInfo);
         dest.writeString(mMemo);
         dest.writeString(mGeo);
-    }
-
-    @BindingAdapter({"app:imageUrl"})
-    public static void loadImage(final ImageView imageView, String imageUrl) {
-        Picasso.get()
-                .load(imageUrl)
-                .into(imageView, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        Bitmap imageBitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-                        double scaleRatio = Math.min(imageView.getHeight() * 0.8 / imageBitmap.getHeight(),
-                                imageView.getWidth() * 0.8 / imageBitmap.getWidth());
-                        imageBitmap = Bitmap.createScaledBitmap(imageBitmap, (int)(imageBitmap.getWidth() * scaleRatio),
-                                (int)(imageBitmap.getHeight() * scaleRatio), true);
-                        RoundedBitmapDrawable imageDrawable = RoundedBitmapDrawableFactory.create(imageView.getResources(), imageBitmap);
-                        imageDrawable.setCircular(true);
-                        imageDrawable.setCornerRadius((Math.max(imageBitmap.getWidth(), imageBitmap.getHeight()) / 2.0f) -
-                        imageView.getResources().getDimensionPixelSize(R.dimen.exhibit_list_pic_padding));
-                        imageView.setImageDrawable(imageDrawable);
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-
-                    }
-                });
     }
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="plantInfo"
+            type="com.timmy.demo.model.server.result.plant.PlantInfo"/>
+
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/plant_icon"
+            android:background="@drawable/bg_plant_list_name"
+            android:textSize="15sp"
+            android:layout_centerVertical="true"
+            android:paddingRight="15dp"
+            android:paddingLeft="35dp"
+            android:textColor="@android:color/black"
+            android:layout_marginLeft="-30dp"
+            android:text="@{plantInfo.tCName}"/>
+
+        <ImageView
+            android:id="@+id/plant_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/bg_exhibit_list_item_pic"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:scaleType="center"
+            android:layout_marginLeft="20dp"
+            app:imageUrl="@{plantInfo.picInfos.get(0).first}"/>
+    </RelativeLayout>
+</layout>

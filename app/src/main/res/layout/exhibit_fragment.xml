@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <import type="android.view.View" />
         <import type="android.text.TextUtils" />
 
@@ -15,7 +14,6 @@
         <variable
             name="exhibitInfo"
             type="android.databinding.ObservableField&lt;com.timmy.demo.model.server.result.exhibit.ExhibitInfo&gt;" />
-
     </data>
 
     <RelativeLayout
@@ -43,10 +41,12 @@
 
         <ImageView
             android:id="@+id/exhibit_pic"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:adjustViewBounds="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/bg_exhibit_pic"
             android:src="@drawable/formosan_animal_01"
             android:visibility="@{exhibitInfo.picUrl == null ? View.INVISIBLE : View.VISIBLE}"
@@ -75,8 +75,8 @@
             android:layout_alignEnd="@+id/exhibit_pic"
             android:layout_alignBottom="@+id/exhibit_pic"
             android:layout_marginEnd="10dp"
-            android:maxWidth="250dp"
             android:background="#55FFFFFF"
+            android:maxWidth="250dp"
             android:text="@{exhibitInfo.memo}"
             android:textAlignment="viewEnd"
             android:textColor="@android:color/black"
@@ -112,7 +112,7 @@
             android:gravity="center"
             android:text="@{exhibitInfo.info}"
             android:textColor="@android:color/black"
-            android:textSize="12sp"
+            android:textSize="15sp"
             android:visibility="@{exhibitInfo.info == null ? View.INVISIBLE : View.VISIBLE}" />
 
     </RelativeLayout>

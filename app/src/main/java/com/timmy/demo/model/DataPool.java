@@ -6,11 +6,13 @@ import android.util.Log;
 
 import com.timmy.demo.BuildConfig;
 import com.timmy.demo.event.ExhibitInfoChangeEvent;
+import com.timmy.demo.event.RetrieveDataStatusEvent;
 import com.timmy.demo.model.server.OpenDataApiClient;
 import com.timmy.demo.model.server.result.exhibit.Exhibit;
 import com.timmy.demo.model.server.result.exhibit.ExhibitInfo;
 import com.timmy.demo.model.server.result.exhibit.ExhibitResult;
 import com.timmy.demo.model.server.result.plant.Plant;
+import com.timmy.demo.model.server.result.plant.PlantInfo;
 import com.timmy.demo.model.server.result.plant.PlantResult;
 import com.timmy.demo.utils.Constants;
 import com.timmy.demo.utils.Utils;
@@ -54,6 +56,10 @@ public class DataPool{
         return mExhibitPlantInfos.getExhibitList();
     }
 
+    public List<PlantInfo> getExhibitPlantsList() {
+        return mExhibitPlantInfos.getExhibitPlants(mCurrentExhibit);
+    }
+
     public void setCurrentExhibit(int index) {
         mCurrentExhibit = index;
         EventBus.getDefault().post(new ExhibitInfoChangeEvent(getCurrentExhibitInfo()));
@@ -73,7 +79,7 @@ public class DataPool{
     }
 
     private Observable<Pair<ExhibitResult, PlantResult>> retrieveDataFromOpenDataApi() {
-        EventBus.getDefault().post(Utils.RetrieveDataStatus.LOAD_DATA);
+        EventBus.getDefault().post(RetrieveDataStatusEvent.LOAD_DATA);
         Log.d(TAG, "load data from network");
         return OpenDataApiClient.getExhibitInfosRx().zipWith(OpenDataApiClient.getPlantInfosRx(),
                 new BiFunction<Response<Exhibit>, Response<Plant>, Pair<ExhibitResult, PlantResult>>() {
@@ -127,13 +133,13 @@ public class DataPool{
                                 Utils.saveToFile(context, result.first, Constants.EXHIBIT_CACHE_FILE);
                                 Utils.saveToFile(context, result.second, Constants.PLANT_CACHE_FILE);
                             }
-                            EventBus.getDefault().post(Utils.RetrieveDataStatus.LOAD_DATA_SUCCESS);
+                            EventBus.getDefault().post(RetrieveDataStatusEvent.LOAD_DATA_SUCCESS);
                         }
 
                         @Override
                         public void onError(Throwable e) {
                             if (mExhibitPlantInfos == null) {
-                                EventBus.getDefault().post(Utils.RetrieveDataStatus.LOAD_DATA_FAIL);
+                                EventBus.getDefault().post(RetrieveDataStatusEvent.LOAD_DATA_FAIL);
                             }
                             e.printStackTrace();
                         }
@@ -148,17 +154,17 @@ public class DataPool{
 
     private Pair<ExhibitResult, PlantResult> getDataFromCache(final Context context) {
         Log.d(TAG, "load data from cache");
-        EventBus.getDefault().post(Utils.RetrieveDataStatus.READ_CACHE);
+        EventBus.getDefault().post(RetrieveDataStatusEvent.READ_CACHE);
 
         ExhibitResult exhibitResult = (ExhibitResult) Utils.loadFromFile(context, Constants.EXHIBIT_CACHE_FILE);
         PlantResult plantResult = (PlantResult) Utils.loadFromFile(context, Constants.PLANT_CACHE_FILE);
 
         if (exhibitResult == null) {
             Log.d(TAG, "load data from cache fail");
-            EventBus.getDefault().post(Utils.RetrieveDataStatus.READ_CACHE_FAIL);
+            EventBus.getDefault().post(RetrieveDataStatusEvent.READ_CACHE_FAIL);
         } else {
             Log.d(TAG, "load data from cache success");
-            EventBus.getDefault().post(Utils.RetrieveDataStatus.READ_CACHE_SUCCESS);
+            EventBus.getDefault().post(RetrieveDataStatusEvent.READ_CACHE_SUCCESS);
         }
         return Pair.create(exhibitResult, plantResult);
     }

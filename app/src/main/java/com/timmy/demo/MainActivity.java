@@ -6,9 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.timmy.demo.event.ExhibitAnimationCompleteEvent;
 import com.timmy.demo.event.ExhibitListDisplayEvent;
+import com.timmy.demo.event.PlantListDisplayEvent;
 import com.timmy.demo.event.SplashCompleteEvent;
 import com.timmy.demo.ui.fragment.ExhibitFragment;
 import com.timmy.demo.ui.fragment.ExhibitListFragment;
+import com.timmy.demo.ui.fragment.PlantListFragment;
 import com.timmy.demo.ui.fragment.SplashFragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean mIsSplashCompleteDone = false;
 
     private ExhibitListFragment mExhibitListFragment;
+    private PlantListFragment mPlantListFragment;
 
 
     @Override
@@ -44,6 +47,12 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
             finish();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Subscribe(threadMode = ThreadMode.POSTING)
@@ -75,6 +84,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.POSTING)
+    public void onPlantListDisplayStatusChange(PlantListDisplayEvent event) {
+        if (event.display()) {
+            showPlantListFragment();
+        } else {
+            hidePlantListFragment();
+        }
+    }
+
     private void showExhibitListFragment() {
         mHandler.post(new Runnable() {
             @Override
@@ -96,6 +114,34 @@ public class MainActivity extends AppCompatActivity {
                 if (mExhibitListFragment != null) {
                     getSupportFragmentManager().beginTransaction()
                             .remove(mExhibitListFragment)
+                            .commitNow();
+                }
+            }
+        });
+    }
+
+
+    private void showPlantListFragment() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (mPlantListFragment == null) {
+                    mPlantListFragment = PlantListFragment.newInstance();
+                }
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, mPlantListFragment)
+                        .commitNow();
+            }
+        });
+    }
+
+    private void hidePlantListFragment() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (mPlantListFragment != null) {
+                    getSupportFragmentManager().beginTransaction()
+                            .remove(mPlantListFragment)
                             .commitNow();
                 }
             }

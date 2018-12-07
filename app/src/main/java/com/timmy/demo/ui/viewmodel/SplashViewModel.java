@@ -6,9 +6,9 @@ import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
 
 import com.timmy.demo.R;
+import com.timmy.demo.event.RetrieveDataStatusEvent;
 import com.timmy.demo.event.SplashCompleteEvent;
 import com.timmy.demo.model.DataPool;
-import com.timmy.demo.utils.Utils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -32,7 +32,7 @@ public class SplashViewModel extends AndroidViewModel {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
-    public void onRetrieveDataStatusChange(Utils.RetrieveDataStatus status) {
+    public void onRetrieveDataStatusChange(RetrieveDataStatusEvent status) {
         switch (status) {
             case READ_CACHE:
                 mLoadingMessage.set(getApplication().getResources().getString(R.string.splash_loading_read_cache));
@@ -55,5 +55,11 @@ public class SplashViewModel extends AndroidViewModel {
                 EventBus.getDefault().post(new SplashCompleteEvent());
                 break;
         }
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        EventBus.getDefault().unregister(this);
     }
 }
