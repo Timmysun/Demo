@@ -5,8 +5,10 @@ import android.support.v4.util.Pair;
 import android.util.Log;
 
 import com.timmy.demo.BuildConfig;
+import com.timmy.demo.event.ExhibitInfoChangeEvent;
 import com.timmy.demo.model.server.OpenDataApiClient;
 import com.timmy.demo.model.server.result.exhibit.Exhibit;
+import com.timmy.demo.model.server.result.exhibit.ExhibitInfo;
 import com.timmy.demo.model.server.result.exhibit.ExhibitResult;
 import com.timmy.demo.model.server.result.plant.Plant;
 import com.timmy.demo.model.server.result.plant.PlantResult;
@@ -15,6 +17,7 @@ import com.timmy.demo.utils.Utils;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import io.reactivex.Observable;
@@ -35,6 +38,9 @@ public class DataPool{
 
     private ExhibitPlantInfos mExhibitPlantInfos;
 
+    private int mCurrentExhibit = -1;
+    private int mCurrentPlant = -1;
+
     private DataPool() { }
 
     public static synchronized DataPool getInstance() {
@@ -42,6 +48,28 @@ public class DataPool{
             sInstance = new DataPool();
         }
         return sInstance;
+    }
+
+    public List<ExhibitInfo> getExhibitList() {
+        return mExhibitPlantInfos.getExhibitList();
+    }
+
+    public void setCurrentExhibit(int index) {
+        mCurrentExhibit = index;
+        EventBus.getDefault().post(new ExhibitInfoChangeEvent(getCurrentExhibitInfo()));
+    }
+
+    public ExhibitInfo getCurrentExhibitInfo() {
+        return mCurrentExhibit >= 0 && mCurrentExhibit < mExhibitPlantInfos.getExhibitList().size() ?
+                mExhibitPlantInfos.getExhibitList().get(mCurrentExhibit) : null;
+    }
+
+    public void setCurrentPlant(int index) {
+        mCurrentPlant = index;
+    }
+
+    public int getCurrentPlant() {
+        return mCurrentPlant;
     }
 
     private Observable<Pair<ExhibitResult, PlantResult>> retrieveDataFromOpenDataApi() {

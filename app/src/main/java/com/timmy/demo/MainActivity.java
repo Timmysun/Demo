@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import com.timmy.demo.event.ExhibitAnimationCompleteEvent;
+import com.timmy.demo.event.ExhibitListDisplayEvent;
 import com.timmy.demo.event.SplashCompleteEvent;
 import com.timmy.demo.ui.fragment.ExhibitFragment;
 import com.timmy.demo.ui.fragment.ExhibitListFragment;
@@ -18,6 +19,10 @@ public class MainActivity extends AppCompatActivity {
 
     private Handler mHandler;
     private boolean mIsSplashCompleteDone = false;
+
+    private ExhibitListFragment mExhibitListFragment;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,13 +53,42 @@ public class MainActivity extends AppCompatActivity {
 
     @Subscribe(threadMode = ThreadMode.POSTING)
     public void onExhibitAnimationComplete(ExhibitAnimationCompleteEvent event) {
-        mHandler.postDelayed(new Runnable() {
+        showExhibitListFragment();
+    }
+
+    @Subscribe(threadMode = ThreadMode.POSTING)
+    public void onExhibitListDisplayStatusChange(ExhibitListDisplayEvent event) {
+        if (event.display()) {
+            showExhibitListFragment();
+        } else {
+            hideExhibitListFragment();
+        }
+    }
+
+    private void showExhibitListFragment() {
+        mHandler.post(new Runnable() {
             @Override
             public void run() {
+                if (mExhibitListFragment == null) {
+                    mExhibitListFragment = ExhibitListFragment.newInstance();
+                }
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, ExhibitListFragment.newInstance())
+                        .add(R.id.container, mExhibitListFragment)
                         .commitNow();
             }
-        }, 1000);
+        });
+    }
+
+    private void hideExhibitListFragment() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (mExhibitListFragment != null) {
+                    getSupportFragmentManager().beginTransaction()
+                            .remove(mExhibitListFragment)
+                            .commitNow();
+                }
+            }
+        });
     }
 }

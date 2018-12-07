@@ -8,4 +8,6 @@
     <string name="splash_loading_network_data">網路資掉讀取中…</string>
     <string name="splash_loading_cache_success">快取資料讀取成功</string>
     <string name="splash_loading_network_fail">網路資料讀取失敗，請確認網路連線…</string>
+    <string name="exhibit_list_button_text">場館列表</string>
+    <string name="plant_list_button_text">植物列表</string>
 </resources>

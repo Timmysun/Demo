@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="exhibitInfo"
+            type="com.timmy.demo.model.server.result.exhibit.ExhibitInfo"/>
+
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/exhibit_icon"
+            android:background="@drawable/bg_exhibit_list_name"
+            android:textSize="15sp"
+            android:layout_centerVertical="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="35dp"
+            android:textColor="@android:color/black"
+            android:layout_marginRight="-30dp"
+            android:text="@{exhibitInfo.name}"/>
+
+        <ImageView
+            android:id="@+id/exhibit_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/bg_exhibit_list_item_pic"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:scaleType="center"
+            android:layout_marginRight="20dp"
+            app:imageUrl="@{exhibitInfo.picUrl}"/>
+    </RelativeLayout>
+</layout>

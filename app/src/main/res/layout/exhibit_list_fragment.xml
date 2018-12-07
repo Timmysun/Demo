@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!--<data>-->
+    <data>
 
-    <!--<variable-->
-    <!--name="viewModel"-->
-    <!--type="com.timmy.demo.ui.viewmodel.SplashViewModel" />-->
+        <variable
+            name="viewModel"
+            type="com.timmy.demo.ui.viewmodel.ExhibitListViewModel" />
 
-    <!--</data>-->
+        <variable
+            name="adapter"
+            type="com.timmy.demo.ui.adapter.ExhibitListAdapter" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
+        android:baselineAligned="false"
         android:weightSum="1"
+        android:onClick="@{viewModel::onClickView}"
         tools:context=".ui.fragment.ExhibitListFragment">
 
 
@@ -22,8 +27,11 @@
             android:id="@+id/exhibit_list"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="#FF5A5A5A"
-            android:layout_weight="0.4"/>
+            android:layout_weight="0.5"
+            android:adapter="@{adapter}"
+            android:dividerHeight="0dp"
+            android:divider="@android:color/transparent"
+            android:background="#FF5A5A5A" />
 
     </LinearLayout>
 </layout>

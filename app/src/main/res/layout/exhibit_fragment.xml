@@ -3,13 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!--<data>-->
+    <data>
 
-    <!--<variable-->
-    <!--name="viewModel"-->
-    <!--type="com.timmy.demo.ui.viewmodel.SplashViewModel" />-->
+        <import type="android.view.View" />
 
-    <!--</data>-->
+        <variable
+            name="viewModel"
+            type="com.timmy.demo.ui.viewmodel.ExhibitViewModel" />
+
+        <variable
+            name="exhibitInfo"
+            type="android.databinding.ObservableField&lt;com.timmy.demo.model.server.result.exhibit.ExhibitInfo&gt;" />
+
+    </data>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,15 +28,17 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:drawableLeft="@drawable/ic_left_arrow"
-            android:text="場館列表"/>
+            android:onClick="@{viewModel::onExhibitListClick}"
+            android:text="@string/exhibit_list_button_text" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
             android:drawableRight="@drawable/ic_right_arrow"
-            android:text="植物列表"/>
+            android:onClick="@{viewModel::onPlantListClick}"
+            android:text="@string/plant_list_button_text" />
 
         <ImageView
             android:id="@+id/exhibit_pic"
@@ -38,7 +47,9 @@
             android:layout_centerInParent="true"
             android:adjustViewBounds="true"
             android:background="@drawable/bg_exhibit_pic"
-            android:src="@drawable/formosan_animal_01" />
+            android:src="@drawable/formosan_animal_01"
+            android:visibility="@{exhibitInfo.picUrl == null ? View.INVISIBLE : View.VISIBLE}"
+            app:imageSrc="@{exhibitInfo.picUrl}" />
 
         <TextView
             android:id="@+id/exhibit_name"
@@ -48,24 +59,29 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="-30dp"
             android:background="@drawable/bg_exhibit_name"
+            android:gravity="center"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:gravity="center"
-            android:text="台灣動物區"
+            android:text="@{exhibitInfo.name}"
             android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:visibility="@{exhibitInfo.name == null ? View.INVISIBLE : View.VISIBLE}" />
 
         <TextView
             android:id="@+id/exhibit_memo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/exhibit_pic"
+            android:layout_alignEnd="@+id/exhibit_pic"
             android:layout_alignBottom="@+id/exhibit_pic"
-            android:layout_alignParentEnd="true"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="10dp"
             android:background="#55FFFFFF"
-            android:gravity="center"
-            android:text="每週一休館，入館門票：全票20元、優待票10元"
+            android:text="@{exhibitInfo.memo}"
+            android:textAlignment="viewEnd"
             android:textColor="@android:color/black"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:visibility="@{exhibitInfo.memo == null ? View.INVISIBLE : View.VISIBLE}" />
 
         <TextView
             android:id="@+id/exhibit_category"
@@ -74,13 +90,14 @@
             android:layout_above="@+id/exhibit_name"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="-10dp"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
             android:background="@drawable/bg_exhibit_category"
             android:gravity="center"
-            android:text="戶外區"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:text="@{exhibitInfo.category}"
             android:textColor="@android:color/black"
-            android:textSize="12dp" />
+            android:textSize="12dp"
+            android:visibility="@{exhibitInfo.category == null ? View.INVISIBLE : View.VISIBLE}" />
 
         <TextView
             android:id="@+id/exhibit_info"
@@ -90,12 +107,13 @@
             android:layout_alignStart="@+id/exhibit_pic"
             android:layout_alignEnd="@+id/exhibit_pic"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
             android:background="@drawable/bg_exhibit_info"
             android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="臺灣動物區以臺灣原生動物與棲息環境為展示重點，佈置模擬動物原生棲地之生態環境，讓動物表現如野外般自然的生活習性，引導觀賞者更正確地認識本土野生動物。臺灣位處於亞熱帶，雨量充沛、氣候溫暖，擁有各種地形景觀，因而孕育了豐富龐雜的生物資源。"
+            android:text="@{exhibitInfo.info}"
             android:textColor="@android:color/black"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:visibility="@{exhibitInfo.info == null ? View.INVISIBLE : View.VISIBLE}" />
 
     </RelativeLayout>
 </layout>

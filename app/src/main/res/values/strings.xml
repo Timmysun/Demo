@@ -7,4 +7,6 @@
     <string name="splash_loading_network_success">Loading data success</string>
     <string name="splash_loading_cache_success">Loading cache success</string>
     <string name="splash_loading_network_fail">Loading data fail, please check network status…</string>
+    <string name="exhibit_list_button_text">Exhibit List</string>
+    <string name="plant_list_button_text">Plant List</string>
 </resources>

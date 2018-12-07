@@ -2,8 +2,11 @@ package com.timmy.demo.model;
 
 import android.support.annotation.Nullable;
 
+import com.timmy.demo.model.server.result.exhibit.ExhibitInfo;
 import com.timmy.demo.model.server.result.exhibit.ExhibitResult;
 import com.timmy.demo.model.server.result.plant.PlantResult;
+
+import java.util.List;
 
 public class ExhibitPlantInfos {
 
@@ -19,6 +22,10 @@ public class ExhibitPlantInfos {
 
     private void buildData() {
 
+    }
+
+    public List<ExhibitInfo> getExhibitList() {
+        return mExhibitResult.getInfos();
     }
 
     public boolean updateExhibitResult(@Nullable ExhibitResult exhibitResult) {

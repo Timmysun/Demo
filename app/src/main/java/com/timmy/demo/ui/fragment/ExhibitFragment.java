@@ -1,5 +1,7 @@
 package com.timmy.demo.ui.fragment;
 
+import android.arch.lifecycle.ViewModelProviders;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,7 +13,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.timmy.demo.R;
+import com.timmy.demo.databinding.ExhibitFragmentBinding;
 import com.timmy.demo.event.ExhibitAnimationCompleteEvent;
+import com.timmy.demo.ui.viewmodel.ExhibitViewModel;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -21,11 +25,17 @@ public class ExhibitFragment extends Fragment {
         return new ExhibitFragment();
     }
 
+    private ExhibitViewModel mViewModel;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.exhibit_fragment, container, false);
+        mViewModel = ViewModelProviders.of(this).get(ExhibitViewModel.class);
+        ExhibitFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.exhibit_fragment, container, false);
+        binding.setViewModel(mViewModel);
+        binding.setExhibitInfo(mViewModel.getCurrentExhibitInfo());
+        return binding.getRoot();
     }
 
     @Override

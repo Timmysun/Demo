@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="fragment_animation_duration">500</dimen>
+    <dimen name="exhibit_list_pic_padding">10dp</dimen>
 </resources>
