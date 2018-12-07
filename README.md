@@ -2,7 +2,7 @@
 
 ## 架構圖
 
-<img src=https://github.com/Timmysun/Demo/blob/master/Untitled%20Diagram.png >
+<img src=https://github.com/Timmysun/Demo/blob/master/diagram.png >
 
 1. 使用MVVM架構
 2. ViewModel與View之間的溝通透過DataBinding的Observer機制，即時更新畫面資料
